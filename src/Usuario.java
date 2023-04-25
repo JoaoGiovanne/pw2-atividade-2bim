@@ -78,7 +78,7 @@ public class Usuario {
     }
 
     public void inativar(){
-        this.dataDeInativação = LocalDate.now();
+        LocalDate.now();
         this.primeiroAcesso = false;
         this.status = StatusUsuarioEnum.INATIVO;
     }
