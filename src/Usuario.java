@@ -1,5 +1,3 @@
-import jdk.swing.interop.SwingInterOpUtils;
-
 import java.time.LocalDate;
 
 public class Usuario {
@@ -50,17 +48,29 @@ public class Usuario {
 
     public void setSenha(String senha) {
         this.senha = senha;
-        this.primeiroAcesso = false;
+        this.primeiroAcesso = true;
         this.status = StatusUsuarioEnum.ATIVO;
         this.tentativasDeAcesso = 0;
+
     }
 
-    public void setTentativasDeAcesso(int tentativasDeAcesso) {
-        this.tentativasDeAcesso = tentativasDeAcesso;
+    public boolean setTentativasDeAcesso(String senha) {
+
+        if (this.senha != senha){
+            System.out.println("Acesso Negado");
+            this.status = StatusUsuarioEnum.BLOQUEADO;
+            return true;
+        }
+        else {
+            System.out.println("Acesso Liberado");
+        }
+        return false;
     }
 
     public void setPrimeiroAcesso(boolean primeiroAcesso) {
-        this.primeiroAcesso = primeiroAcesso;
+        if (primeiroAcesso) {
+            this.primeiroAcesso = false;
+        }
     }
 
     public void setDataDeInativação(LocalDate dataDeInativação) {
@@ -89,6 +99,11 @@ public class Usuario {
         System.out.println("Senha: " + senha);
         System.out.println("Trocar senha: " + primeiroAcesso);
         System.out.println("Status: " + status);
+    }
+    public void autenticar(String senha){
+        if (status == StatusUsuarioEnum.INATIVO || status == StatusUsuarioEnum.BLOQUEADO){
+            System.out.println("Acesso Negado");
+        }
     }
 }
 
